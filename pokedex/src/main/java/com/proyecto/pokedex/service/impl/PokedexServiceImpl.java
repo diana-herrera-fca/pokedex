@@ -66,6 +66,9 @@ public class PokedexServiceImpl implements PokedexService {
             String evolutionChainUrl = speciesJson.get("evolution_chain").get("url").asText();
             ResponseEntity<JsonNode> evolutionResponse = restTemplate.getForEntity(evolutionChainUrl, JsonNode.class);
             JsonNode evolutionJson = evolutionResponse.getBody();
+            if (evolutionJson == null || !evolutionJson.has("chain")) {
+                throw new RuntimeException("Invalid evolution chain data for " + pokemonName);
+            }
             JsonNode current = evolutionJson.get("chain");
             while (current != null) {
                 evolutions.add(getPokemonGeneralInformation(current.get("species").get("name").asText()));

@@ -17,12 +17,12 @@ public class PokedexController {
     @Autowired
     PokedexService pokedexService;
     @GetMapping("/pokedex")
-    public Page hello(@RequestParam(value = "limit") int limit, @RequestParam(value = "offset") int offset) {
+    public Page getAllPokemon(@RequestParam(value = "limit") int limit, @RequestParam(value = "offset") int offset) {
         Page pokemonResponse = pokedexService.getAllPokemon(limit, offset);
         return pokemonResponse;
     }
     @GetMapping("/pokedex/pokemon/{pokemon}")
-    public PokemonDetailResponse hello(@PathVariable(value = "pokemon") String name) {
+    public PokemonDetailResponse getPokemonDetail(@PathVariable(value = "pokemon") String name) {
         return pokedexService.getPokemonDetail(name);
     }
 }
