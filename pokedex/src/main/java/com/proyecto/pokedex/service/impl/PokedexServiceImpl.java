@@ -8,6 +8,7 @@ import com.proyecto.pokedex.entity.response.Page;
 import com.proyecto.pokedex.entity.response.PokemonGeneralInfo;
 import com.proyecto.pokedex.service.PokedexService;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -39,16 +40,16 @@ public class PokedexServiceImpl implements PokedexService {
         return result;
     }
     @Cacheable(value = "pokemonCache", key = "#name")
-    public PokemonDetailResponse getPokemonDetail(String name) {
+    public ResponseEntity<?> getPokemonDetail(String name) {
         final String uri = "https://pokeapi.co/api/v2/pokemon/"+name;
         try {
             PokemonDetailResponse result = restTemplate.getForObject(uri, PokemonDetailResponse.class);
             result.setEvolutions(getPokemonEvolutions(name));
             result.setDescription(getPokemonDescription(result.getId()));
-            return result;
+            return ResponseEntity.ok().body(result);
         }catch (HttpClientErrorException.NotFound e){
             System.err.println("Error fetching data: " + e.getMessage());
-            return new PokemonDetailResponse();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pokemon Not Found");
         }
     }
 

@@ -7,6 +7,8 @@ import com.proyecto.pokedex.entity.response.Page;
 import com.proyecto.pokedex.entity.response.PokemonGeneralInfo;
 import com.proyecto.pokedex.service.PokedexService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,12 +19,12 @@ public class PokedexController {
     @Autowired
     PokedexService pokedexService;
     @GetMapping("/pokedex")
-    public Page getAllPokemon(@RequestParam(value = "limit") int limit, @RequestParam(value = "offset") int offset) {
+    public ResponseEntity<?> getAllPokemon(@RequestParam(value = "limit") int limit, @RequestParam(value = "offset") int offset) {
         Page pokemonResponse = pokedexService.getAllPokemon(limit, offset);
-        return pokemonResponse;
+        return ResponseEntity.ok().body(pokemonResponse);
     }
     @GetMapping("/pokedex/pokemon/{pokemon}")
-    public PokemonDetailResponse getPokemonDetail(@PathVariable(value = "pokemon") String name) {
-        return pokedexService.getPokemonDetail(name);
+    public ResponseEntity<?>  getPokemonDetail(@PathVariable(value = "pokemon") String name) {
+        return  pokedexService.getPokemonDetail(name);
     }
 }
