@@ -4,10 +4,24 @@ Además, incluyo capturas de pantalla que muestran cómo realicé el despliegue 
 
 Frontend: Una aplicación en React, desplegada con AWS Amplify y conectada directamente al repositorio de GitHub. Cada vez que se realizan cambios en la rama master, se despliega automáticamente.
 Backend: La aplicación de Spring Boot, desplegada en una instancia EC2.
-Cabe mencionar que, al no contar con un dominio certificado, tuve inconvenientes para que las peticiones del frontend se comunicaran correctamente con el backend. Para solucionar este problema, utilicé el API Gateway de AWS, lo que me permitió mapear los endpoints a nuevas URLs con HTTPS y agregar funcionalidades de gateway.
-
+Detalle de Pokémon: Permite obtener información de un Pokémon por su nombre.
+Resultados paginados: Devuelve una lista de Pokémon según los parámetros offset y limit.
+La aplicación se despliega en AWS Elastic Beanstalk y utiliza CaffeineCache para la gestión de caché.
+Endpoint para detalle:
+http://aplicacion-env.eba-p22dcwvp.us-east-2.elasticbeanstalk.com/pokedex/pokemon/pikachu
+Endpoint para paginación:
+http://aplicacion-env.eba-p22dcwvp.us-east-2.elasticbeanstalk.com/pokedex?offset=0&limit=10
+API Gateway:
+Dado que la aplicación carecía de un dominio certificado, se implementó un API Gateway en AWS para mapear los endpoints a URLs con HTTPS, facilitando la comunicación segura entre el frontend y el backend.
+Endpoint para detalle:
+https://xe40edt7y4.execute-api.us-east-2.amazonaws.com/prod/pokedex/pokemon/pikachu
+Endpoint para paginación:
+https://xe40edt7y4.execute-api.us-east-2.amazonaws.com/prod/pokedex?offset=0&limit=10
 El frontend está desarrollado en React y, en la aplicación de Spring Boot, se utiliza CaffeineCache para el manejo de caché.
-
+Repositorio en GitHub:
+https://github.com/diana-herrera-fca/reactPokedex
+URL de la aplicación:
+https://master.d2y12r4xc83xma.amplifyapp.com/
 Deploy de EC2
 ![Captura de pantalla 2025-03-13 085931](https://github.com/user-attachments/assets/8c2517c5-b237-4243-b0e0-91bce27c5a57)
 ![Captura de pantalla 2025-03-13 085859](https://github.com/user-attachments/assets/296aae4b-3b61-4f37-aca5-956eee848eac)
